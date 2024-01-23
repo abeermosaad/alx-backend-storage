@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from pymongo import MongoClient
 """Python script that provides some stats about Nginx logs stored in MongoDB"""
+from pymongo import MongoClient
 
 client = MongoClient('127.0.01', 27017)
 collection = client.logs.nginx
