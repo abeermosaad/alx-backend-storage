@@ -1,8 +1,2 @@
-// connect to mongo and list databases
-
-HOST="127.0.0.1"
-PORT="27017"
-
-mongo --host $HOST --port $PORT --quiet
-    show dbs
-EOF
+// list databases
+show dbs
