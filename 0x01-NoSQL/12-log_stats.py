@@ -12,4 +12,5 @@ methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 for method in methods:
     print(f"method {method}: {collection.count_documents({'method': method})}")
 
-print(f'{collection.count_documents({"method": "GET", "path": "/status"})} status check')
+print(f'{collection.count_documents({"method": "GET", "path": "/status"})}\
+ status check')
