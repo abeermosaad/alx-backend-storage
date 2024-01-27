@@ -6,7 +6,7 @@ import uuid
 from functools import wraps
 
 
-def count_calls(method):
+def count_calls(method: Any) -> Any:
     """Count calls decorator for methods"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
@@ -16,21 +16,20 @@ def count_calls(method):
     return wrapper
 
 
-def call_history(method):
+def call_history(method: Any) -> Any:
     """Call history decorator for methods"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """Wrapper method"""
         output = method(self, *args, **kwargs)
         method_name = method.__qualname__
-        print(method_name)
         self._redis.rpush(f"{method_name}:inputs", str(args))
         self._redis.rpush(f"{method_name}:outputs", str(output))
         return output
     return wrapper
 
 
-def replay(method):
+def replay(method: Any) -> Any:
     """Replay decorator for methods"""
     r = redis.Redis()
     method_name = method.__qualname__
