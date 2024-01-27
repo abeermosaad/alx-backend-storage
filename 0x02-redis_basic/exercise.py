@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
+
 """Redis exercise module"""
 import redis
-from typing import Union, Optional, Any
+from typing import Union, Optional, Any, Callable
 import uuid
 from functools import wraps
 
 
-def count_calls(method: Any) -> Any:
+def count_calls(method: Callable) -> Callable:
     """Count calls decorator for methods"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
@@ -16,7 +17,7 @@ def count_calls(method: Any) -> Any:
     return wrapper
 
 
-def call_history(method: Any) -> Any:
+def call_history(method: Callable) -> Callable:
     """Call history decorator for methods"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
@@ -29,7 +30,7 @@ def call_history(method: Any) -> Any:
     return wrapper
 
 
-def replay(method: Any) -> Any:
+def replay(method: Callable) -> Callable:
     """Replay decorator for methods"""
     r = redis.Redis()
     method_name = method.__qualname__
@@ -44,13 +45,13 @@ def replay(method: Any) -> Any:
 class Cache:
     """Cache class"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Constructor method"""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    @count_calls
     @call_history
+    @count_calls
     def store(self, data: Union[str, float, bytes, int]) -> str:
         """Store method"""
         random_key = str(uuid.uuid4())
@@ -58,12 +59,12 @@ class Cache:
         return random_key
 
     @staticmethod
-    def get_int(value):
+    def get_int(value: bytes) -> int:
         """Convert bytes to int"""
         return int(value)
 
     @staticmethod
-    def get_str(value):
+    def get_str(value: bytes) -> str:
         """Convert bytes to str"""
         return str(value)
 
